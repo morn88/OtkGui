@@ -5,7 +5,7 @@ class OtkGui(QtGui.QWidget):
     def __init__(self):
         super(OtkGui, self).__init__()
 
-        self.setGeometry(50, 50, 900, 600)
+        self.setGeometry(50, 50, 980, 600)
         self.setWindowTitle('Просмотр натяжения струнопакетов')
         # self.showMaximized()
 
@@ -24,7 +24,10 @@ class OtkGui(QtGui.QWidget):
 
         self.model = QtSql.QSqlTableModel(self)
         self.model.setTable('span')
-        self.model.setEditStrategy(2)
+
+        curr_date = QtCore.QDate.currentDate()
+        string = "tens_date=" + '"' + curr_date.toString('yyyy-MM-dd') + '"'
+        self.model.setFilter(string)
         self.model.select()
 
         self.label3.setText(self.model.lastError().text())
@@ -34,6 +37,8 @@ class OtkGui(QtGui.QWidget):
         self.table.setModel(self.model)
         self.table.setShowGrid(True)
         self.table.resizeColumnsToContents()
+        self.table.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
+        self.table.horizontalHeader().setStretchLastSection(True)
 
         self.my_grid = QtGui.QGridLayout(self)
         self.my_grid.addWidget(self.btn, 0, 0)
@@ -78,6 +83,10 @@ class OtkGui(QtGui.QWidget):
             string = "tens_date=" +'"' + my_date.toString('yyyy-MM-dd') + '"'
             self.model.setFilter(string)
             self.model.select()
+            self.table.setSortingEnabled(True)
+            self.table.setSelectionBehavior(1)
+            self.table.resizeColumnsToContents()
+            self.table.horizontalHeader().setStretchLastSection(True)
         else:
             print("Error")
             self.label3.setStyleSheet('color: rgb(255, 0, 0)')
