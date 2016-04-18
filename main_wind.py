@@ -29,6 +29,15 @@ class OtkGui(QtGui.QWidget):
         string = "tens_date=" + '"' + curr_date.toString('yyyy-MM-dd') + '"'
         self.model.setFilter(string)
         self.model.select()
+        self.model.setHeaderData(0, QtCore.Qt.Horizontal, 'Дата')
+        self.model.setHeaderData(1, QtCore.Qt.Horizontal, 'Время')
+        self.model.setHeaderData(2, QtCore.Qt.Horizontal, 'Номер формы')
+        self.model.setHeaderData(3, QtCore.Qt.Horizontal, 'Номер ячейки')
+        self.model.setHeaderData(4, QtCore.Qt.Horizontal, 'Заданное усилие')
+        self.model.setHeaderData(5, QtCore.Qt.Horizontal, 'Усилие 1')
+        self.model.setHeaderData(6, QtCore.Qt.Horizontal, 'Усилие 2')
+        self.model.setHeaderData(7, QtCore.Qt.Horizontal, 'Усилие 3')
+        self.model.setHeaderData(8, QtCore.Qt.Horizontal, 'Усилие 4')
 
         self.label3.setText(self.model.lastError().text())
         print(self.model.lastError().text())
