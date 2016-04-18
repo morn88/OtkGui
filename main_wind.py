@@ -29,6 +29,7 @@ class OtkGui(QtGui.QWidget):
         string = "tens_date=" + '"' + curr_date.toString('yyyy-MM-dd') + '"'
         self.model.setFilter(string)
         self.model.select()
+
         self.model.setHeaderData(0, QtCore.Qt.Horizontal, 'Дата')
         self.model.setHeaderData(1, QtCore.Qt.Horizontal, 'Время')
         self.model.setHeaderData(2, QtCore.Qt.Horizontal, 'Номер формы')
@@ -49,13 +50,17 @@ class OtkGui(QtGui.QWidget):
         self.table.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
         self.table.horizontalHeader().setStretchLastSection(True)
 
+        self.stylesheet = "::section{Background-color:rgb(190,1,1);border-radius:14px;color:white;}"
+        self.table.horizontalHeader().setStyleSheet(self.stylesheet)
+        self.table.verticalHeader().setStyleSheet(self.stylesheet)
+
         self.my_grid = QtGui.QGridLayout(self)
         self.my_grid.addWidget(self.btn, 0, 0)
         self.my_grid.addWidget(self.label, 0, 1)
         self.my_grid.addWidget(self.label1, 0, 2)
         self.my_grid.addWidget(self.label2, 0, 13)
         self.my_grid.addWidget(self.label3, 0, 14)
-        self.my_grid.addWidget(self.table, 1, 0, 1, 15)
+        self.my_grid.addWidget(self.table, 1, 0, 1, 1)
 
         self.show()
 
@@ -76,6 +81,7 @@ class OtkGui(QtGui.QWidget):
         modalWindow.cld1.setMaximumDate(QtCore.QDate.currentDate())
         modalWindow.cld1.selectionChanged.connect(self.my_query)
         modalWindow.cld1.setHorizontalHeaderFormat(2)
+        modalWindow.cld1.setVerticalHeaderFormat(0)
 
         modalWindow.show()
 
