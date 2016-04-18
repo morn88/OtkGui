@@ -17,20 +17,6 @@ class OtkGui(QtGui.QWidget):
         self.label2 = QtGui.QLabel("Cоединение с базой: ", self)
         self.label3 = QtGui.QLabel(self)
 
-        # self.table = QtGui.QTableWidget(0, 9, self)
-        # self.table.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
-        # self.table.setHorizontalHeaderItem(0, QtGui.QTableWidgetItem("Дата"))
-        # self.table.setHorizontalHeaderItem(1, QtGui.QTableWidgetItem("Время"))
-        # self.table.setHorizontalHeaderItem(2, QtGui.QTableWidgetItem("Номер формы"))
-        # self.table.setHorizontalHeaderItem(3, QtGui.QTableWidgetItem('Номер ячейки'))
-        # self.table.setHorizontalHeaderItem(4, QtGui.QTableWidgetItem('Усилие заданное'))
-        # self.table.setHorizontalHeaderItem(5, QtGui.QTableWidgetItem('Усилие 1'))
-        # self.table.setHorizontalHeaderItem(6, QtGui.QTableWidgetItem('Усилие 2'))
-        # self.table.setHorizontalHeaderItem(7, QtGui.QTableWidgetItem('Усилие 3'))
-        # self.table.setHorizontalHeaderItem(8, QtGui.QTableWidgetItem('Усилие 4'))
-        # self.table.setSelectionBehavior(QtGui.QAbstractItemView.SelectRows)
-        # self.table.horizontalHeader().setStretchLastSection(True)
-        # self.table.setDisabled(True)
 
         self.db = QtSql.QSqlDatabase.addDatabase("QSQLITE")
         self.db.setHostName("localhost")
@@ -41,10 +27,12 @@ class OtkGui(QtGui.QWidget):
         self.model.setEditStrategy(2)
         self.model.select()
 
+        self.label3.setText(self.model.lastError().text())
         print(self.model.lastError().text())
 
         self.table = QtGui.QTableView(self)
         self.table.setModel(self.model)
+        self.table.setShowGrid(True)
         self.table.resizeColumnsToContents()
 
         self.my_grid = QtGui.QGridLayout(self)
@@ -86,17 +74,14 @@ class OtkGui(QtGui.QWidget):
             print('OK')
             self.label3.setStyleSheet('color: rgb(0, 255, 0)')
             self.label3.setText('OK')
-
+            print(my_date.toString('yyyy-MM-dd'))
+            string = "tens_date=" +'"' + my_date.toString('yyyy-MM-dd') + '"'
+            self.model.setFilter(string)
+            self.model.select()
         else:
             print("Error")
             self.label3.setStyleSheet('color: rgb(255, 0, 0)')
             self.label3.setText('Error')
-
-        query = QtSql.QSqlQuery(self.db)
-        if query.exec_("SELECT * FROM span"):
-            while query.next():
-                print(query.value(0), query.value(1), query.value(2), query.value(3), query.value(4), query.value(5),
-                query.value(6), query.value(7), query.value(8))
 
 
 app = QtGui.QApplication(sys.argv)
