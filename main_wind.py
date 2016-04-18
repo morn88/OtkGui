@@ -1,11 +1,12 @@
 import sys
 from PyQt4 import QtGui, QtCore, QtSql
 
+
 class OtkGui(QtGui.QWidget):
     def __init__(self):
         super(OtkGui, self).__init__()
 
-        self.setGeometry(50, 50, 980, 600)
+        self.setGeometry(50, 50, 800, 600)
         self.setWindowTitle('Просмотр натяжения струнопакетов')
         # self.showMaximized()
 
@@ -16,7 +17,6 @@ class OtkGui(QtGui.QWidget):
         self.label1 = QtGui.QLabel(self)
         self.label2 = QtGui.QLabel("Cоединение с базой: ", self)
         self.label3 = QtGui.QLabel(self)
-
 
         self.db = QtSql.QSqlDatabase.addDatabase("QSQLITE")
         self.db.setHostName("localhost")
@@ -60,7 +60,7 @@ class OtkGui(QtGui.QWidget):
         self.my_grid.addWidget(self.label1, 0, 2)
         self.my_grid.addWidget(self.label2, 0, 13)
         self.my_grid.addWidget(self.label3, 0, 14)
-        self.my_grid.addWidget(self.table, 1, 0, 1, 1)
+        self.my_grid.addWidget(self.table, 1, 0, 1, 15)
 
         self.show()
 
