@@ -82,7 +82,11 @@ def last_file():
 set_db = read_config('config.ini', 'database')
 set_csv = read_config('config.ini', 'source')
 
-for file in os.listdir(set_csv['csv_path']):
-    parse_csv_file(file, set_csv['csv_path'])
+if len(os.listdir(set_csv['csv_path'])) > 0:
+    print('В папке CSV объект(ов): %s' % len(os.listdir(set_csv['csv_path'])))
+    for file in os.listdir(set_csv['csv_path']):
+        parse_csv_file(file, set_csv['csv_path'])
+else:
+    print("В папке CSV файлов не обнаружено")
 
 #last_file()
