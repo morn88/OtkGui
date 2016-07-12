@@ -52,7 +52,7 @@ def parse_csv_file(file_csv, path):
         curs = conn.cursor()
 
         for row in list_of_request:
-            curs.execute('insert into Span6 values (?,?,?,?,?,?,?,?,?)', row)
+            curs.execute('insert into span values (?,?,?,?,?,?,?,?,?)', row)
             conn.commit()
 
         conn.close()
